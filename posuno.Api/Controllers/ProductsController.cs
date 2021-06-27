@@ -74,10 +74,16 @@ namespace posuno.Api.Controllers
         }
 
         // POST: api/Products
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<Product>> PostProduct(Product product)
         {
+            User user = await _context.Users.FirstOrDefaultAsync(u => u.Id == product.User.Id);
+            if (user == null)
+            {
+                return BadRequest("Usuario no existe.");
+            }
+            product.User = user;
+
             _context.Products.Add(product);
             await _context.SaveChangesAsync();
 
