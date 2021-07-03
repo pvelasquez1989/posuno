@@ -1,4 +1,5 @@
 ﻿using posuno.Helpers;
+using posuno.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -38,8 +39,31 @@ namespace posuno.Pages
                 return;
             }
 
-            MessageDialog messageDialog = new MessageDialog("Vamos bien!", "Ok");
-            await messageDialog.ShowAsync();
+            Response response = await ApiService.LoginAsync(new LoginRequest
+            {
+                Email = EmailTextBox.Text,
+                Password = PasswordPasswordBox.Password
+
+            });
+
+            MessageDialog messageDialog;
+            if (!response.IsSucces)
+            {
+                messageDialog = new MessageDialog(response.Message, "Error");
+                await messageDialog.ShowAsync();
+                return;
+            }
+
+            User user = (User)response.Result;
+            if (user == null)
+            {
+                messageDialog = new MessageDialog("Usuario o contraseña incorrectos", "Error");
+                await messageDialog.ShowAsync();
+                return;
+            }
+
+             messageDialog = new MessageDialog($"{user.FullName}", "Ok");
+             await messageDialog.ShowAsync();
 
 
         }
@@ -61,9 +85,9 @@ namespace posuno.Pages
                 return false;
             }
 
-            if (string.IsNullOrEmpty(PasswordPasswordBox.Password))
+            if (PasswordPasswordBox.Password.Length < 7 )
             {
-                messageDialog = new MessageDialog("Debes ingresar tu contraseña", "Error");
+                messageDialog = new MessageDialog("Debes ingresar tu contraseña de al menos siete (7) carácteres. ", "Error");
                 await messageDialog.ShowAsync();
                 return false;
             }
