@@ -16,7 +16,7 @@
        
         public string Password { get; set; }
 
-        public string FullName => $"Bienvenido: {FirstName} {LastName}";
+        public string FullName => $"Bienvenid@: {FirstName} {LastName}";
 
     }
 }
