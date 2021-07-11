@@ -8,18 +8,17 @@ using Windows.UI.Xaml.Navigation;
 
 
 
-// The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
 namespace posuno.Pages
 {
-    /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
-    /// </summary>
+   
     public sealed partial class MainPage : Page
     {
+        
         public MainPage()
         {
-            this.InitializeComponent();
+            InitializeComponent();
+           
         }
 
         public User User { get; set; }
@@ -29,6 +28,7 @@ namespace posuno.Pages
             base.OnNavigatedTo(e);
             User = (User)e.Parameter;
             WelcomeTextBlock.Text = $"{User.FullName}";
+            MyFrame.Navigate(typeof(CustomersPage));
         }
 
         private async void LogoutImage_Tapped(object sender, TappedRoutedEventArgs e)
@@ -52,5 +52,17 @@ namespace posuno.Pages
 
             return await confirmDialog.ShowAsync();
         }
+
+        private void CustomersNavigationViewItem_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            MyFrame.Navigate(typeof(CustomersPage));
+        }
+
+        private void ProductsNavigationViewItem_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            MyFrame.Navigate(typeof(ProductsPage));
+        }
     }
 }
+
+
