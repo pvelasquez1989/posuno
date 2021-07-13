@@ -43,7 +43,7 @@ namespace posuno.Pages
             Response response = await ApiService.GetListAsync<Product>("products");
             loader.Close();
 
-            if (!response.IsSucces)
+            if (!response.IsSuccess)
             {
                 MessageDialog dialog = new MessageDialog(response.Message, "Error");
                 await dialog.ShowAsync();
@@ -61,5 +61,6 @@ namespace posuno.Pages
             ProductsListView.Items.Clear();
             ProductsListView.ItemsSource = Products;
         }
+
     }
 }

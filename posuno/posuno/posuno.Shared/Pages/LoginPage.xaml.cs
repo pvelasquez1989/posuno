@@ -42,7 +42,7 @@ namespace posuno.Pages
             loader.Close();
 
             MessageDialog messageDialog;
-            if (!response.IsSucces)
+            if (!response.IsSuccess)
             {
                 messageDialog = new MessageDialog(response.Message, "Error");
                 await messageDialog.ShowAsync();
